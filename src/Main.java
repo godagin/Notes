@@ -4,18 +4,12 @@
     TEMA: Personalinė užrašų sistema: adresai, užrašai, darbai, kalendorius;
 */
 
-import net.Goda.notebook.Note;
-import net.Goda.notebook.notelist.NoteType;
-import net.Goda.notebook.notelist.PersonalNote;
-import net.Goda.notebook.todolist.TodoNote;
-
-import java.util.Calendar;
-import java.util.Date;
-
 public class Main {
     public static void main(String[] args) {
 
-        //treciam atsiskaitymui
+
+
+ /*       //treciam atsiskaitymui
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2023,11,9);
@@ -52,7 +46,7 @@ public class Main {
         a.clearData();
         System.out.println(a.toString());
 
-
+*/
 /*
         //pirmam atsiskaitymui
         Note note1 = new Note();
