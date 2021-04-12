@@ -2,7 +2,7 @@ package net.Goda.notebook;
 
 import java.awt.*;
 
-public interface Colorable extends Customizable{
+public interface Colorable{
 
     void setColor(Color color);
     Color getColor();

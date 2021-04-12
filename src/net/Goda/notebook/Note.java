@@ -3,7 +3,7 @@ package net.Goda.notebook;
 import java.awt.*;
 import java.util.Date;
 
-public abstract class Note implements Colorable {
+public abstract class Note implements Customizable {
 
     private String text;
     private String author;

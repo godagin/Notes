@@ -2,7 +2,7 @@ package net.Goda.notebook;
 
 import java.awt.*;
 
-public interface Customizable {
+public interface Customizable extends Colorable{
 
     void setFont(Font font);
     Font getFont();
