@@ -22,8 +22,6 @@ public abstract class Note extends Thread implements Customizable, Serializable 
     //*************************************************
 
 
-    public Note(){this(new String());}
-
     public Note(String text){this.text = text;}
 
     public Note(String text, String author){
@@ -37,14 +35,18 @@ public abstract class Note extends Thread implements Customizable, Serializable 
 
     @Override
     public void run() {
-        //File saveFile = new File("savedData.txt");
+
         try {
-            ObjectOutputStream fileOut = new ObjectOutputStream("saveHere.ser");
+            File outputFile = new File("savedData.txt");
+            if(!outputFile.exists()){
+                outputFile.createNewFile();
+            }
+            FileOutputStream fileOut = new FileOutputStream(outputFile);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);
             out.close();
             fileOut.close();
-            System.out.printf("Serialized data is saved in /tmp/employee.ser");
+
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("An error occurred.");
