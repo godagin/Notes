@@ -1,9 +1,10 @@
 package net.Goda.notebook;
 
 import java.awt.*;
+import java.io.*;
 import java.util.Date;
 
-public abstract class Note implements Customizable, Cloneable {
+public abstract class Note extends Thread implements Customizable, Serializable {
 
     private String text;
     private String author;
@@ -33,6 +34,23 @@ public abstract class Note implements Customizable, Cloneable {
 
     //*************************************************
 
+
+    @Override
+    public void run() {
+        //File saveFile = new File("savedData.txt");
+        try {
+            ObjectOutputStream fileOut = new ObjectOutputStream("saveHere.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+            fileOut.close();
+            System.out.printf("Serialized data is saved in /tmp/employee.ser");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("An error occurred.");
+        }
+
+    }
 
     @Override
     public void setFont(Font font){ this.font = font; }
@@ -75,7 +93,7 @@ public abstract class Note implements Customizable, Cloneable {
 
     //*************************************************
 
-
+/*
     @Override
     public Note clone(){
         Note clone = null;
@@ -86,7 +104,7 @@ public abstract class Note implements Customizable, Cloneable {
         }
         return clone;
     }
-
+*/
 
     //*************************************************
 

@@ -1,6 +1,6 @@
 package net.Goda.notebook.notelist;
 
-public enum NoteType {
+public enum NoteType implements Cloneable {
     WORK,
     HOBBY,
     DEFAULT

@@ -6,7 +6,7 @@ import net.Goda.notebook.Note;
 import java.awt.*;
 
 
-public class PersonalNote extends Note {
+public class PersonalNote extends Note implements Cloneable{
 
     private NoteType noteType = NoteType.DEFAULT;
 
@@ -99,10 +99,16 @@ public class PersonalNote extends Note {
     }
 
     @Override
-    public Note clone(){
-        Note clone = (PersonalNote) super.clone();
-        (PersonalNote)clone.setNoteType();
-        return clone;
+    public PersonalNote clone() {
+        PersonalNote cloned = null;
+        try{
+            cloned = (PersonalNote) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        cloned.noteType = this.noteType;
+        //clonedNote.noteType = (NoteType) super.clone();//reikia nustatyti noteType
+        return cloned;
     }
 
     //*************************************************
