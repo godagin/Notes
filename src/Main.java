@@ -4,8 +4,63 @@
     TEMA: Personalinė užrašų sistema: adresai, užrašai, darbai, kalendorius;
 */
 
+
+import net.Goda.notebook.NoteException;
+import net.Goda.notebook.todolist.NoteDateException;
+
+import net.Goda.notebook.todolist.TodoNote;
+
+import java.util.Calendar;
+import java.util.Date;
+
 public class Main {
-    public static void main(String[] args) {
+
+    public static void main(String[] args){
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(2021, 02, 05);
+        Date reminder = calendar.getTime();
+
+        calendar.set(2021, 03, 01);
+        Date due = calendar.getTime();
+
+        TodoNote note = null;
+
+        try {
+            note = new TodoNote("", "autorius", reminder, due);
+
+        } catch(NoteDateException e) {
+            e.printStackTrace();
+            System.out.println("Wrong date: " + e.getdate());
+
+        } catch (NoteException e){
+            e.printStackTrace();
+        }
+
+        try {
+            note = new TodoNote("Geras tekstas", "autorius", reminder, due);
+
+        } catch (NoteDateException e) {
+            e.printStackTrace();
+            System.out.println("Wrong date: " + e.getdate());
+
+        } catch (NoteException e){
+            e.printStackTrace();
+        }
+
+        calendar.set(2021,05,05);
+        due = calendar.getTime();
+
+        try {
+            note = new TodoNote("Geras tekstas", "autorius", reminder, due);
+
+        } catch (NoteDateException e) {
+            e.printStackTrace();
+            System.out.println("Wrong date: " + e.getdate());
+
+        } catch (NoteException e){
+            e.printStackTrace();
+        }
 
 
 
@@ -45,8 +100,8 @@ public class Main {
         System.out.println(a.toString());
         a.clearData();
         System.out.println(a.toString());
-
 */
+
 /*
         //pirmam atsiskaitymui
         Note note1 = new Note();

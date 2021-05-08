@@ -1,17 +1,16 @@
 package net.Goda.notebook.todolist;
 
 import net.Goda.notebook.Note;
+import net.Goda.notebook.NoteException;
 
-import java.awt.*;
 import java.util.Date;
 
 
-public class TodoNote extends Note implements DatedNote {
+public class TodoNote extends Note implements Remindable {
 
     private boolean isDone = false;
     private Date dueDate;
     private Date reminderDate;
-    private final Date creationDate = new Date();
 
 
     //*************************************************
@@ -21,22 +20,39 @@ public class TodoNote extends Note implements DatedNote {
         super();
     }
 
-    public TodoNote(String text){
+    public TodoNote(String text) throws NoteException {
         super(text);
+        if(text.equals("") || text == null) {
+            throw new NoteException(this, "No text given to note.");
+        }
     }
 
-    public TodoNote(String text, String author){
+    public TodoNote(String text, String author) throws NoteException {
         super(text, author);
+        if(text.equals("") || text == null){
+            throw new NoteException(this, "No text given to note.");
+        }
     }
 
-    public TodoNote(String text, String author, Date reminderDate){
+    public TodoNote(String text, String author, Date dueDate) throws NoteException {
         this(text, author);
-        this.reminderDate = reminderDate;
+
+        if(dueDate.before(getCreationDate())){
+            throw new NoteDateException(this, "Invalid due date.", dueDate);
+        }else{
+            this.dueDate = dueDate;
+            this.reminderDate = dueDate;
+        }
     }
 
-    public TodoNote(String text, String author, Date reminderDate, Date dueDate){
-        this(text, author, reminderDate);
-        this.dueDate = dueDate;
+    public TodoNote(String text, String author, Date reminderDate, Date dueDate) throws NoteException {
+        this(text, author, dueDate);
+
+        if(reminderDate.after(dueDate) || reminderDate.before(getCreationDate())){
+            throw new NoteDateException(this, "Invalid reminder date.", reminderDate);
+        } else {
+            this.reminderDate = reminderDate;
+        }
     }
 
 
@@ -54,9 +70,9 @@ public class TodoNote extends Note implements DatedNote {
     @Override
     public String toString(){
         String toString;
-        toString = getClass().getName() + '@' + Integer.toHexString(hashCode()) +
-                " Note: " + getText() + " -" + getAuthor() +
-                " Created:" + getCreationDate() + " Due: " + dueDate + " Is done:" + isDone;
+        toString = " Note: " + getText() + " -" + getAuthor() +
+                "\nCreated:" + getCreationDate() + " Reminder: " + getReminderDate() +
+                "\nDue: " + dueDate + " Is done:" + isDone;
         return toString;
     }
 
@@ -82,14 +98,30 @@ public class TodoNote extends Note implements DatedNote {
     public Date getReminderDate(){ return reminderDate; }
 
     @Override
-    public final void setReminderDate(Date date){ reminderDate = date; }
+    public final void setReminderDate(Date date) throws NoteDateException {
+
+        if(reminderDate.before(getCreationDate())){
+            throw new NoteDateException(this, "Invalid reminder date.", date);
+        }else{
+            reminderDate = date;
+        }
+    }
 
     @Override
     public Date getDueDate(){ return dueDate; }
 
     @Override
-    public void setDueDate(Date date){ dueDate = date; }
+    public void setDueDate(Date date) throws NoteDateException {
 
+        if(dueDate.before(getCreationDate())){
+            throw new NoteDateException(this, "Invalid due date.", date);
+        }else{
+            dueDate = date;
+        }
+    }
+
+
+/*
     @Override
     public void clearData() {
         setText("");
@@ -103,5 +135,7 @@ public class TodoNote extends Note implements DatedNote {
         setColor(Color.WHITE);
         setTextColor(Color.BLACK);
     }
+
+ */
 
 }

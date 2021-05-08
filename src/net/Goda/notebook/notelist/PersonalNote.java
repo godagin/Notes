@@ -18,6 +18,10 @@ public class PersonalNote extends Note {
 
     public PersonalNote(){ super(); }
 
+    public PersonalNote(String text){
+        super(text);
+    }
+
     public PersonalNote(String text, String author){
         super(text, author);
     }
@@ -59,11 +63,13 @@ public class PersonalNote extends Note {
         assignColorByType();
     }
 
+    public NoteType getNoteType(){ return noteType; }
+
     public void setImportance(int importance){ this.importance = importance; }
 
     public int getImportance(){ return importance; }
 
-    public NoteType getNoteType(){ return noteType; }
+
 
 
     //*************************************************
@@ -72,10 +78,9 @@ public class PersonalNote extends Note {
     @Override
     public String toString(){
         String toString;
-        toString = getClass().getName() + '@' + Integer.toHexString(hashCode()) +
-                " Note: " + getText() + " -" + getAuthor() +
-                " Type: " + getNoteType() +
-                " Created: " + getCreationDate();
+        toString = "Note: " + getText() + " - " + getAuthor() +
+                "\nType: " + getNoteType() +
+                "\nCreated: " + getCreationDate();
         return toString;
     }
 
@@ -93,22 +98,16 @@ public class PersonalNote extends Note {
         return false;
     }
 
+    @Override
+    public Note clone(){
+        Note clone = (PersonalNote) super.clone();
+        (PersonalNote)clone.setNoteType();
+        return clone;
+    }
 
     //*************************************************
 
 
-    @Override
-    public void clearData() {
-        setText("");
-        setAuthor("");
-        noteType = NoteType.DEFAULT;
-        setColor(Color.WHITE);
-        importance = 0;
-        setBold(false);
-        setItalic(false);
-        setFontSize(12);
-        setTextColor(Color.BLACK);
-    }
 }
 
 
