@@ -1,6 +1,6 @@
 package net.Goda.notebook;
 
-public class NoteException extends Exception{
+public class NoteException extends RuntimeException{
     protected Note note;
 
     public NoteException(Note note, String message){

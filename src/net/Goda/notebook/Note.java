@@ -1,23 +1,25 @@
 package net.Goda.notebook;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
-public abstract class Note extends Thread implements Customizable, Serializable {
+public abstract class Note implements Customizable, Cloneable, Serializable {
 
     private String text;
     private String author;
-    private final Date creationDate = new Date();
+    private Date creationDate = new Date();
 
-    private Font font;
-    private int fontSize = 12;
+    private Font font = new Font("Arial", Font.PLAIN, 12);
     private boolean isBold = false;
     private boolean isItalic = false;
 
     private Color color = Color.WHITE;
     private Color textColor = Color.BLACK;
 
+    public static ArrayList<Thread> threadList = new ArrayList<>();
 
     //*************************************************
 
@@ -34,37 +36,10 @@ public abstract class Note extends Thread implements Customizable, Serializable 
 
 
     @Override
-    public void run() {
-
-        try {
-            File outputFile = new File("savedData.txt");
-            if(!outputFile.exists()){
-                outputFile.createNewFile();
-            }
-            FileOutputStream fileOut = new FileOutputStream(outputFile);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this);
-            out.close();
-            fileOut.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("An error occurred.");
-        }
-
-    }
-
-    @Override
     public void setFont(Font font){ this.font = font; }
 
     @Override
     public Font getFont(){ return font; }
-
-    @Override
-    public void setFontSize(int fontSize){ this.fontSize = fontSize; }
-
-    @Override
-    public int getFontSize(){ return fontSize; }
 
     @Override
     public void setBold(boolean isBold){ this.isBold = isBold; }
@@ -95,18 +70,25 @@ public abstract class Note extends Thread implements Customizable, Serializable 
 
     //*************************************************
 
-/*
+
     @Override
     public Note clone(){
         Note clone = null;
         try {
             clone = (Note) super.clone();
+            //clone.text = new String(this.text);
+            //clone.author = new String(this.text);
+            clone.creationDate = (Date) this.creationDate.clone();
+            clone.font = new Font(this.font.getAttributes());
+
+            clone.color = new Color(this.color.getRGB());
+            clone.textColor = new Color(this.textColor.getRGB());
+
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
         return clone;
     }
-*/
 
     //*************************************************
 
@@ -120,6 +102,22 @@ public abstract class Note extends Thread implements Customizable, Serializable 
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void saveNote(File outputFile){
+        Thread thread = new Thread(new NoteWriter(this, outputFile));
+        thread.start();
+        threadList.add(thread);
+    }
+
+    public static void joinThreads() {
+        for(Thread thread : threadList){
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     //public abstract void clearData();

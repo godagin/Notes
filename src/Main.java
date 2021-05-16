@@ -5,17 +5,79 @@
 */
 
 
+import net.Goda.notebook.Note;
 import net.Goda.notebook.NoteException;
+import net.Goda.notebook.NoteFactory;
+import net.Goda.notebook.notelist.NoteType;
+import net.Goda.notebook.notelist.PersonalNote;
 import net.Goda.notebook.todolist.NoteDateException;
 
 import net.Goda.notebook.todolist.TodoNote;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Main {
 
     public static void main(String[] args){
+
+
+        File file = new File("savedData.txt");
+
+        for(int i=0; i<50; i++){
+            Note note = new TodoNote("lalala"+i, "bababa"+i);
+            note.saveNote(file);
+
+        }
+        Note.joinThreads();
+        Note test = NoteFactory.readNote(file);
+        System.out.println("\n\nTEST.1 :       "+test.toString());
+
+        test = NoteFactory.readNote(file);
+        System.out.println("\n\nTEST.2 :       "+test.toString());
+        /*
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(2021, 06, 05);
+        Date due = calendar.getTime();
+
+        TodoNote original = null;
+
+        original = new TodoNote("Laba diena","Goda", due, due);
+
+
+        TodoNote copy = original.clone();
+        //System.out.println(original.toString());
+        //System.out.println(copy.toString());
+
+        //System.out.println(original.getReminderDate() == copy.getReminderDate());
+        System.out.println(original.getReminderDate());
+        System.out.println(copy.getReminderDate());
+
+        //calendar.setTime(original.reminderDate);
+        //calendar.add(Calendar.DATE, 1);
+        //original.reminderDate.setTime(calendar.getTime().getTime());
+
+        System.out.println(original.getReminderDate());
+        System.out.println(copy.getReminderDate());
+
+        System.out.println("original.getText() == copy.getText() " + (original.getText() == copy.getText()));
+
+
+        System.out.println(original.getFont() == copy.getFont());
+        System.out.println(original.getColor() == copy.getColor());
+        System.out.println(original.getTextColor() == copy.getTextColor());
+        System.out.println(original.getReminderDate() == copy.getReminderDate());
+        System.out.println(original.getDueDate() == copy.getDueDate());
+
+        Note test = NoteFactory.createNote("personal");
+        //System.out.println(test.toString());
+
+        Note test2 = NoteFactory.createNote("todo");
+        //System.out.println(test2.toString());
+        */
+        /*
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(2021, 02, 05);
@@ -62,7 +124,7 @@ public class Main {
             e.printStackTrace();
         }
 
-
+/*
 
  /*       //treciam atsiskaitymui
 
@@ -88,47 +150,9 @@ public class Main {
         System.out.println(personal1.getNoteType());
 
         Note a;
-        a = new Note("TEST TEST TEST", "123 NOTE", date);
-        System.out.println(a.toString());
-        a.clearData();
-        System.out.println(a.toString());
-        a = new PersonalNote("LA LA LA", "123 PERSONAL", date);
-        System.out.println(a.toString());
-        a.clearData();
-        System.out.println(a.toString());
-        a = new TodoNote("TODO", "123 TODO", date);
-        System.out.println(a.toString());
-        a.clearData();
         System.out.println(a.toString());
 */
 
-/*
-        //pirmam atsiskaitymui
-        Note note1 = new Note();
-        note1.println();
-        note1.setAuthor("Goda");
-        note1.setText("Atsiskaitau darba");
-        note1.setReminderDate(2022,0, 19);
-        System.out.println("Pirmas note uzpildytas be valandinio patikslinimo:");
-        note1.println();
-        System.out.println("Pirmas note uzpildytas su val, min, sec (overloaded metodas):");
-        note1.setReminderDate(2022,8, 18, 14, 25, 45);
-        note1.println();
-
-        Note note2 = new Note("message no. 1", "abc", 2021, 04, 01);
-        System.out.println("Antras note:");
-        note2.println();
-        System.out.println("Get:");
-        System.out.println(note2.getText());
-        System.out.println(note2.getAuthor());
-        System.out.println(note2.getCreationDate());
-        System.out.println(note2.getReminderDate());
-
-        System.out.println("Static metodas:");
-        System.out.print( Note.getNoteCount() + " " + note1.getNoteCount());
-
-        System.out.println(note1.toString());
-*/
 
     }
 }

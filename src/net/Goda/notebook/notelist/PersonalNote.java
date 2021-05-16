@@ -4,9 +4,10 @@ import net.Goda.notebook.Note;
 
 
 import java.awt.*;
+import java.io.Serializable;
 
 
-public class PersonalNote extends Note implements Cloneable{
+public class PersonalNote extends Note implements Serializable {
 
     private NoteType noteType = NoteType.DEFAULT;
 
@@ -15,8 +16,6 @@ public class PersonalNote extends Note implements Cloneable{
 
     //*************************************************
 
-
-    public PersonalNote(){ super(); }
 
     public PersonalNote(String text){
         super(text);
@@ -98,18 +97,7 @@ public class PersonalNote extends Note implements Cloneable{
         return false;
     }
 
-    @Override
-    public PersonalNote clone() {
-        PersonalNote cloned = null;
-        try{
-            cloned = (PersonalNote) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        cloned.noteType = this.noteType;
-        //clonedNote.noteType = (NoteType) super.clone();//reikia nustatyti noteType
-        return cloned;
-    }
+
 
     //*************************************************
 

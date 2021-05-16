@@ -2,11 +2,13 @@ package net.Goda.notebook.todolist;
 
 import net.Goda.notebook.Note;
 import net.Goda.notebook.NoteException;
+import net.Goda.notebook.notelist.PersonalNote;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class TodoNote extends Note implements Remindable {
+public class TodoNote extends Note implements Remindable, Cloneable, Serializable {
 
     private boolean isDone = false;
     private Date dueDate;
@@ -15,10 +17,6 @@ public class TodoNote extends Note implements Remindable {
 
     //*************************************************
 
-
-    public TodoNote(){
-        super();
-    }
 
     public TodoNote(String text) throws NoteException {
         super(text);
@@ -70,9 +68,9 @@ public class TodoNote extends Note implements Remindable {
     @Override
     public String toString(){
         String toString;
-        toString = " Note: " + getText() + " -" + getAuthor() +
-                "\nCreated:" + getCreationDate() + " Reminder: " + getReminderDate() +
-                "\nDue: " + dueDate + " Is done:" + isDone;
+        toString = "Note: " + getText() + " - " + getAuthor() +
+                "\nCreated: " + getCreationDate() + " Reminder: " + getReminderDate() +
+                "\nDue: " + dueDate + " Is done: " + isDone;
         return toString;
     }
 
@@ -82,12 +80,21 @@ public class TodoNote extends Note implements Remindable {
         if (o == null || getClass() != o.getClass()) return false;
         TodoNote todoNote = (TodoNote) o;
         if(isDone == todoNote.isDone &&
-                getText() == todoNote.getText() &&
-                getAuthor() == todoNote.getAuthor() &&
+                getText().equals(todoNote.getText()) &&
+                getAuthor().equals(todoNote.getAuthor()) &&
                 getReminderDate() == todoNote.getReminderDate()){
             return true;
         }
         return false;
+    }
+
+
+    @Override
+    public TodoNote clone() {
+
+        //cloned.reminderDate = (Date) this.reminderDate.clone();
+        //cloned.dueDate = (Date) this.dueDate.clone();
+        return (TodoNote) super.clone();
     }
 
 
